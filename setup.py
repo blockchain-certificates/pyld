@@ -9,39 +9,30 @@ PyLD_ is a Python JSON-LD_ library.
 .. _JSON-LD: http://json-ld.org/
 """
 
-from distutils.core import setup
 import os
 import sys
+import uuid
+
+from pip.req import parse_requirements
+from setuptools import setup
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+install_reqs = parse_requirements(os.path.join(here, 'requirements.txt'), session=uuid.uuid1())
+reqs = [str(ir.req) for ir in install_reqs]
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
-from pyld import jsonld
 
 with open('README.rst') as file:
     long_description = file.read()
 
 setup(
-    name = 'PyLD',
-    version = jsonld.__version__,
-    description = 'Python implementation of the JSON-LD API',
-    long_description=long_description,
-    author = 'Digital Bazaar',
-    author_email = 'support@digitalbazaar.com',
-    url = 'http://github.com/digitalbazaar/pyld',
-    packages = ['pyld'],
-    package_dir = {'': 'lib'},
-    license = 'BSD 3-Clause license',
-    classifiers = [
-        'Development Status :: 4 - Beta',
-        'Environment :: Console',
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Internet',
-        'Topic :: Software Development :: Libraries',
-    ],
-    install_requires = [
-        'requests'
-    ],
+    name='blockcerts-pyld',
+    version='0.0.2',
+    description='Blockcerts fork of Digital Bazaar Python implementation of the JSON-LD API',
+    author='Blockcerts',
+    url='http://github.com/blockchain-certificates/pyld',
+    packages=['pyld'],
+    package_dir={'': 'lib'},
+    install_requires=reqs
 )
